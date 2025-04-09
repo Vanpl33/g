@@ -1,0 +1,77 @@
+class Vehicle:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+class RuskiRower(Vehicle):
+    def __init__(self, brand, model, power):
+        super().__init__(brand, model)
+        self.power = power
+
+    def description(self):
+        return f"{self.brand} {self.model} with {self.power} HP"
+
+class RuskiRowerElectric(Vehicle):
+    def __init__(self, brand, model, battery_range):
+        super().__init__(brand, model)
+        self.battery_range = battery_range
+
+    def description(self):
+        return f"{self.brand} {self.model} with {self.battery_range} km battery range"
+
+class RuskiRowerLuxury(Vehicle):
+    def __init__(self, brand, model, luxury_level):
+        super().__init__(brand, model)
+        self.luxury_level = luxury_level
+
+    def description(self):
+        return f"{self.brand} {self.model} luxury level: {self.luxury_level}"
+
+class Garage:
+    def __init__(self):
+        self.vehicles = []
+
+    def add_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+
+    def get_vehicle_descriptions(self):
+        return [v.description() for v in self.vehicles]
+
+    def get_vehicle_brands(self):
+        return [v.brand for v in self.vehicles]
+
+    def get_vehicle_dict(self):
+        return {v.model: v.description() for v in self.vehicles}
+
+    def get_vehicle_types(self):
+        return {v.model: type(v).__name__ for v in self.vehicles}
+
+    def get_vehicle_count(self):
+        return len(self.vehicles)
+
+garage = Garage()
+garage.add_vehicle(RuskiRower("Ruski Rower", "Model R1", 50))
+garage.add_vehicle(RuskiRowerElectric("Ruski Rower", "Model E1", 120))
+garage.add_vehicle(RuskiRowerLuxury("Ruski Rower", "Model L1", "Złoty widelec"))
+garage.add_vehicle(RuskiRower("Ukraina", "Model U1", 40))
+garage.add_vehicle(RuskiRowerElectric("Kazach", "Model K1", 100))
+garage.add_vehicle(RuskiRowerLuxury("Białoruś", "Model B1", "Skórzane siodełko"))
+
+print("Vehicle descriptions list:", garage.get_vehicle_descriptions())
+print("Vehicle descriptions dictionary:", garage.get_vehicle_dict())
+print("Vehicle brands list:", garage.get_vehicle_brands())
+print("Vehicle types dictionary:", garage.get_vehicle_types())
+print("Total number of vehicles:", garage.get_vehicle_count())
+
+def get_electric_vehicles(garage):
+    return [v.description() for v in garage.vehicles if isinstance(v, RuskiRowerElectric)]
+
+def get_luxury_vehicles(garage):
+    return [v.description() for v in garage.vehicles if isinstance(v, RuskiRowerLuxury)]
+
+print("Electric vehicles list:", get_electric_vehicles(garage))
+print("Luxury vehicles list:", get_luxury_vehicles(garage))
+
+#I LIKE IT
+for i in range(5):
+    print("RUSKI ROWER GÓRĄ!!!")
