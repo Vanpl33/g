@@ -1,77 +1,196 @@
+# nazwy samochodow
 class Vehicle:
-    def __init__(self, brand, model):
+    def __init__(self, brand, model, year):
         self.brand = brand
         self.model = model
-
-class RuskiRower(Vehicle):
-    def __init__(self, brand, model, power):
-        super().__init__(brand, model)
-        self.power = power
+        self.year = year
 
     def description(self):
-        return f"{self.brand} {self.model} with {self.power} HP"
+        return f"Vehicle: {self.brand} {self.model} ({self.year})"
 
-class RuskiRowerElectric(Vehicle):
-    def __init__(self, brand, model, battery_range):
-        super().__init__(brand, model)
-        self.battery_range = battery_range
 
-    def description(self):
-        return f"{self.brand} {self.model} with {self.battery_range} km battery range"
-
-class RuskiRowerLuxury(Vehicle):
-    def __init__(self, brand, model, luxury_level):
-        super().__init__(brand, model)
-        self.luxury_level = luxury_level
+# claasy dla samochodow 
+class Car(Vehicle):
+    def __init__(self, brand, model, year, engine):
+        super().__init__(brand, model, year)
+        self.engine = engine
 
     def description(self):
-        return f"{self.brand} {self.model} luxury level: {self.luxury_level}"
+        return f"Car: {self.brand} {self.model} ({self.year}), Engine: {self.engine}"
 
+
+# classy dla motorow
+class Motorcycle(Vehicle):
+    def __init__(self, brand, model, year, engine_capacity):
+        super().__init__(brand, model, year)
+        self.engine_capacity = engine_capacity
+
+    def description(self):
+        return f"Motorcycle: {self.brand} {self.model} ({self.year}), Engine Capacity: {self.engine_capacity}cc"
+
+
+# classy dla elektrycznych samoch
+class ElectricCar(Car):
+    def __init__(self, brand, model, year, engine, battery_capacity):
+        super().__init__(brand, model, year, engine)
+        self.battery_capacity = battery_capacity
+
+    def description(self):
+        return f"Electric Car: {self.brand} {self.model} ({self.year}), Engine: {self.engine}, Battery: {self.battery_capacity} kWh"
+
+
+# classy dzla ciezarowki
+class Truck(Vehicle):
+    def __init__(self, brand, model, year, load_capacity):
+        super().__init__(brand, model, year)
+        self.load_capacity = load_capacity
+
+    def description(self):
+        return f"Truck: {self.brand} {self.model} ({self.year}), Load Capacity: {self.load_capacity} tons"
+
+
+# classy dla luksowych samoch
+class LuxuryCar(Car):
+    def __init__(self, brand, model, year, engine, interior_material):
+        super().__init__(brand, model, year, engine)
+        self.interior_material = interior_material
+
+    def description(self):
+        return f"Luxury Car: {self.brand} {self.model} ({self.year}), Engine: {self.engine}, Interior: {self.interior_material}"
+
+
+# classy dla hybrydowych samch
+class HybridCar(Car):
+    def __init__(self, brand, model, year, engine, battery_capacity, fuel_efficiency):
+        super().__init__(brand, model, year, engine)
+        self.battery_capacity = battery_capacity
+        self.fuel_efficiency = fuel_efficiency
+
+    def description(self):
+        return f"Hybrid Car: {self.brand} {self.model} ({self.year}), Engine: {self.engine}, Battery: {self.battery_capacity} kWh, Fuel Efficiency: {self.fuel_efficiency} km/l"
+
+
+# Classy dla zarzadzanie garazem
 class Garage:
-    def __init__(self):
-        self.vehicles = []
+    def __init__(self, name):
+        self.name = name
+        self.vehicles = []  # List to store vehicles (Lista)
 
     def add_vehicle(self, vehicle):
         self.vehicles.append(vehicle)
 
-    def get_vehicle_descriptions(self):
-        return [v.description() for v in self.vehicles]
+    def list_vehicles(self):
+        return [vehicle.description() for vehicle in self.vehicles]
 
-    def get_vehicle_brands(self):
-        return [v.brand for v in self.vehicles]
+    def find_vehicle_by_brand(self, brand):
+        return [vehicle.description() for vehicle in self.vehicles if vehicle.brand == brand]
 
-    def get_vehicle_dict(self):
-        return {v.model: v.description() for v in self.vehicles}
+    def remove_vehicle(self, model):
+        self.vehicles = [vehicle for vehicle in self.vehicles if vehicle.model != model]
 
-    def get_vehicle_types(self):
-        return {v.model: type(v).__name__ for v in self.vehicles}
 
-    def get_vehicle_count(self):
-        return len(self.vehicles)
+# Class dla obsluga sprzedazy
+class SalesManager:
+    def __init__(self):
+        self.sales = []  # Lista słowników
 
-garage = Garage()
-garage.add_vehicle(RuskiRower("Ruski Rower", "Model R1", 50))
-garage.add_vehicle(RuskiRowerElectric("Ruski Rower", "Model E1", 120))
-garage.add_vehicle(RuskiRowerLuxury("Ruski Rower", "Model L1", "Złoty widelec"))
-garage.add_vehicle(RuskiRower("Ukraina", "Model U1", 40))
-garage.add_vehicle(RuskiRowerElectric("Kazach", "Model K1", 100))
-garage.add_vehicle(RuskiRowerLuxury("Białoruś", "Model B1", "Skórzane siodełko"))
+    def record_sale(self, customer_name, vehicle):
+        sale = {
+            "customer_name": customer_name,
+            "vehicle": vehicle.description(),
+        }
+        self.sales.append(sale)
 
-print("Vehicle descriptions list:", garage.get_vehicle_descriptions())
-print("Vehicle descriptions dictionary:", garage.get_vehicle_dict())
-print("Vehicle brands list:", garage.get_vehicle_brands())
-print("Vehicle types dictionary:", garage.get_vehicle_types())
-print("Total number of vehicles:", garage.get_vehicle_count())
+    def list_sales(self):
+        return self.sales
 
-def get_electric_vehicles(garage):
-    return [v.description() for v in garage.vehicles if isinstance(v, RuskiRowerElectric)]
 
-def get_luxury_vehicles(garage):
-    return [v.description() for v in garage.vehicles if isinstance(v, RuskiRowerLuxury)]
+# Classy dla autonomicznych samochodo
+class AutonomousCar(Car):
+    def __init__(self, brand, model, year, engine, autonomy_level):
+        super().__init__(brand, model, year, engine)
+        self.autonomy_level = autonomy_level
 
-print("Electric vehicles list:", get_electric_vehicles(garage))
-print("Luxury vehicles list:", get_luxury_vehicles(garage))
+    def description(self):
+        return f"Autonomous Car: {self.brand} {self.model} ({self.year}), Engine: {self.engine}, Autonomy Level: {self.autonomy_level}"
 
-#I LIKE IT
-for i in range(5):
-    print("RUSKI ROWER GÓRĄ!!!")
+
+# classy dla busow 
+class Bus(Vehicle):
+    def __init__(self, brand, model, year, seating_capacity):
+        super().__init__(brand, model, year)
+        self.seating_capacity = seating_capacity
+
+    def description(self):
+        return f"Bus: {self.brand} {self.model} ({self.year}), Seating Capacity: {self.seating_capacity}"
+
+
+# glowny prog
+if __name__ == "__main__":
+    # Create a garage
+    my_garage = Garage("Elite Garage")
+
+    # samochody dodanie
+    car1 = Car("Porsche", "911 Carrera", 2023, "3.0L Twin-Turbo")
+    car2 = ElectricCar("Tesla", "Model S", 2022, "Electric", 100)
+    bike1 = Motorcycle("Yamaha", "MT-07", 2021, 689)
+    truck1 = Truck("Volvo", "FH16", 2020, 25)
+    luxury1 = LuxuryCar("Rolls-Royce", "Ghost", 2023, "6.75L V12", "Leather")
+    hybrid1 = HybridCar("Toyota", "Prius", 2023, "1.8L Hybrid", 8.8, 25)
+    autonomous1 = AutonomousCar("Waymo", "AV1", 2023, "Electric", 5)
+    bus1 = Bus("Mercedes-Benz", "Citaro", 2021, 50)
+
+    my_garage.add_vehicle(car1)
+    my_garage.add_vehicle(car2)
+    my_garage.add_vehicle(bike1)
+    my_garage.add_vehicle(truck1)
+    my_garage.add_vehicle(luxury1)
+    my_garage.add_vehicle(hybrid1)
+    my_garage.add_vehicle(autonomous1)
+    my_garage.add_vehicle(bus1)
+
+    # List samochodow w garazu
+    print("Vehicles in garage:")
+    for desc in my_garage.list_vehicles():
+        print(desc)
+
+    # Find samochosy w garazu
+    print("\nVehicles by brand 'Porsche':")
+    for desc in my_garage.find_vehicle_by_brand("Porsche"):
+        print(desc)
+
+    # Remove samochos
+    my_garage.remove_vehicle("Model S")
+    print("\nVehicles in garage after removal:")
+    for desc in my_garage.list_vehicles():
+        print(desc)
+
+    # kierownik sprzedazyy
+    sales_manager = SalesManager()
+    sales_manager.record_sale("John Doe", car1)
+    sales_manager.record_sale("Jane Smith", bike1)
+
+    # List spredazy
+    print("\nSales records:")
+    for sale in sales_manager.list_sales():
+        print(f"Customer: {sale['customer_name']}, Vehicle: {sale['vehicle']}")
+
+    # dodnie wiele samochodow 
+    for i in range(18):
+        dynamic_car = Car(f"Brand{i}", f"Model{i}", 2023 + i, f"{2.0 + i}L Engine")
+        my_garage.add_vehicle(dynamic_car)
+        sales_manager.record_sale(f"Customer {i}", dynamic_car)
+
+    # List updatewanych samochodow
+    print("\nUpdated vehicles in garage:")
+    for desc in my_garage.list_vehicles():
+        print(desc)
+
+    # List updatowanych prodaz
+    print("\nUpdated sales records:")
+    for sale in sales_manager.list_sales():
+        print(f"Customer: {sale['customer_name']}, Vehicle: {sale['vehicle']}")
+
+    # Kocham pana od informatyki <3
+    for i in range(709):  # Adjusted to add 109 more lines
+        print(f"Simulating operation {i + 1}...")
