@@ -192,5 +192,5 @@ if __name__ == "__main__":
         print(f"Customer: {sale['customer_name']}, Vehicle: {sale['vehicle']}")
 
     # Kocham pana od informatyki <3
-    for i in range(3):  # Adjusted to add 109 more lines
-        print(f"Simulating operation {i + 1}...")
+    for i in range(3): 
+        print(f"lecimy !!!! {i + 1}...")
